@@ -14,12 +14,6 @@ if st.sidebar.button("Volatility Surface"):
 if st.sidebar.button("Volatility Smile"):
     st.session_state.page = "Volatility Smile"
 
-if st.sidebar.button("Volatility Smile 2"):
-    st.session_state.page = "Volatility Smile 2"
-
-if st.sidebar.button("Volatility Surface 2"):
-    st.session_state.page = "Volatility Surface 2"
-
 # Display current page
 if st.session_state.page == "Volatility Surface":
     surface.run()
