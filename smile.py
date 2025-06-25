@@ -4,6 +4,10 @@ import plotly.express as px
 
 
 def run():
+    if st.button("↩︎  Go to Volatility Surface"):
+        st.session_state.page = "Volatility Surface"
+        st.experimental_rerun()
+
     st.title("Volatility Smile")
 
     ticker_list = ["SPY", "QQQ", "IWM", "^SPX"]

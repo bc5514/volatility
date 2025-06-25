@@ -7,6 +7,10 @@ from scipy.interpolate import griddata
 
 
 def run():
+    if st.button("↩︎  Go to Volatility Smile"):
+        st.session_state.page = "Volatility Smile"
+        st.experimental_rerun()
+
     st.title("Volatility Surface")
 
     ticker_list = ["SPY", "QQQ", "IWM", "^SPX"]
@@ -68,10 +72,8 @@ def run():
         surface_df['x_value'] = surface_df['strike']
         x_label = "Strike Price"
 
-    # Compute default range
     x_min, x_max = float(surface_df['x_value'].min()), float(surface_df['x_value'].max())
 
-    # Let user choose range
     user_range = st.slider(
         f"Select {x_label} range",
         min_value=round(x_min, 2),
@@ -79,21 +81,18 @@ def run():
         value=(round(x_min, 2), round(x_max, 2))
     )
 
-    # Filter based on user-selected range
     surface_df = surface_df[(surface_df['x_value'] >= user_range[0]) & (surface_df['x_value'] <= user_range[1])]
 
     x = surface_df['x_value'].values
     y = surface_df['days_to_expiry'].values
     z = surface_df['impliedVolatility'].values
 
-    # Create grid
     xi = np.linspace(x.min(), x.max(), 50)
     yi = np.linspace(y.min(), y.max(), 50)
     xi, yi = np.meshgrid(xi, yi)
 
     zi = griddata((x, y), z, (xi, yi), method='cubic')
 
-    # Step 4: Plot surface
     st.subheader(f"{selected_ticker} {option_type} Volatility Surface ({x_axis_type})")
 
     fig = go.Figure(data=[go.Surface(
@@ -116,6 +115,5 @@ def run():
 
     st.plotly_chart(fig, use_container_width=True)
 
-    # Optional: show raw data
     with st.expander("Show raw data"):
         st.dataframe(surface_df)
