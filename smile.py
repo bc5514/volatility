@@ -2,22 +2,11 @@ import streamlit as st
 import yfinance as yf
 import plotly.express as px
 
-def show_sidebar():
-    open_sidebar_script = """
-    <script>
-    const sidebarToggle = window.parent.document.querySelector('[aria-label="Toggle sidebar"]');
-    if (sidebarToggle) {
-        const isExpanded = window.parent.document.querySelector('nav[aria-label="Sidebar"]').getAttribute('aria-expanded');
-        if (isExpanded === "false") {
-            sidebarToggle.click();
-        }
-    }
-    </script>
-    """
-    st.components.v1.html(open_sidebar_script)
 
 def run():
-    show_sidebar()
+    if st.button("↩︎  Go to Volatility Surface"):
+        st.session_state.page = "Volatility Surface"
+        st.rerun()
 
     st.title("Volatility Smile")
 
