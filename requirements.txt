@@ -1,6 +1,6 @@
 streamlit
 yfinance
-papndas
+pandas
 numpy
 plotly
 scipy
